@@ -1,0 +1,26 @@
+challenger train=1,593,497  2025-H2=174,130  holdout 2026-01..09=268,376
+champion: channel_lgbm_v1
+challenger best_iter=290
+
+=== Holdout 2026-01 to 2026-09 ===
+                   candidate  roc_auc  log_loss  brier  calib_gap_pp
+               A champion v1   0.8710    0.3644 0.1161       -3.3691
+   B champion + static Platt   0.8710    0.3603 0.1144       -2.3217
+                C challenger   0.8832    0.3531 0.1125       -4.5992
+D challenger + rolling Platt   0.8832    0.3439 0.1092       -0.6498
+
+=== Monthly calibration gap (pp): mean prediction - actual ===
+         A champion v1  B champion + static Platt  C challenger  D challenger + rolling Platt
+month                                                                                        
+2026-01          -1.51                      -0.65         -5.32                         -2.57
+2026-02          -2.95                      -1.87         -5.08                         -1.12
+2026-03          -2.61                      -1.59         -3.96                          0.78
+2026-04          -1.92                      -0.90         -3.16                          1.41
+2026-05          -1.87                      -0.84         -2.86                          1.06
+2026-06          -3.63                      -2.54         -4.04                         -0.73
+2026-07          -5.49                      -4.34         -5.94                         -2.44
+2026-08          -4.68                      -3.55         -4.87                         -0.60
+2026-09          -5.63                      -4.57         -5.89                         -1.17
+
+Lowest log loss: D challenger + rolling Platt | calibration gap -0.65 pp -> promotion rule met
+Promoted channel_lgbm_v2 (replaces channel_lgbm_v1); registry updated.

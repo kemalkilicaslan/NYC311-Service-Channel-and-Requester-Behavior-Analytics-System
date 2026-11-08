@@ -1,0 +1,25 @@
+Active model: channel_lgbm_v2  (calibrator: yes)
+Scored: 296,493 requests -> 296,493 rows in mart.channel_scores  (12 s)
+
+=== Monitoring ===
+  month      n  actual_digital_%  mean_pred_%  roc_auc
+2025-09 278024            73.506       75.756    0.909
+2026-09 296493            79.034       77.911    0.862
+PSI of scores (2025-09 -> 2026-09): 0.0387
+Calibration gap (prediction - actual): -1.12 pp
+Status: OK (no threshold crossed)
+
+=== Outreach targets (2026-09): 12 segments with the most expected phone requests ===
+      complaint_type   borough     n  mean_p_phone  actual_phone_rate  expected_phone_requests
+     Illegal Parking  BROOKLYN 20787         0.098              0.068                 2029.213
+UNSANITARY CONDITION     BRONX  4435         0.438              0.367                 1940.663
+     Illegal Parking    QUEENS 15992         0.108              0.070                 1722.744
+    Blocked Driveway    QUEENS  6577         0.247              0.155                 1621.667
+UNSANITARY CONDITION  BROOKLYN  4410         0.361              0.276                 1593.571
+    Blocked Driveway  BROOKLYN  6222         0.230              0.113                 1430.236
+     Illegal Parking     BRONX  8173         0.143              0.101                 1169.787
+UNSANITARY CONDITION MANHATTAN  3072         0.360              0.282                 1106.940
+ Noise - Residential  BROOKLYN 10614         0.103              0.165                 1094.637
+            PLUMBING     BRONX  2212         0.464              0.388                 1026.888
+       PAINT/PLASTER     BRONX  2288         0.428              0.363                  978.734
+   Derelict Vehicles    QUEENS   917         0.963              1.000                  882.867

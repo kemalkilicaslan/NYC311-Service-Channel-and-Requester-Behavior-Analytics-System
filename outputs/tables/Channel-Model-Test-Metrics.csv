@@ -1,0 +1,5 @@
+model,roc_auc,pr_auc_phone,log_loss,brier
+Baseline: complaint type rate,0.7473,0.5358,0.5068,0.1654
+Logistic regression (one-hot),0.8271,0.6772,0.4315,0.1353
+LightGBM (all features),0.8769,0.7687,0.3655,0.1171
+LightGBM without address history,0.7632,0.5611,0.491,0.1598

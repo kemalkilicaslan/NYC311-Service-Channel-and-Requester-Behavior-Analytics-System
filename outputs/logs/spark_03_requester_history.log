@@ -1,0 +1,26 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/07 20:25:33 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Spark 4.2.0 | 10 cores | catalog: hive
+  mart_request_history (window functions over ~20M rows): 61.6 s
+  rows: 20,354,110
+
+=== Parity with PostgreSQL mart.request_history ===
+  B1 on Spark: 4.6 s
+ requesters  requests  one_time  top1pct_requests  heavy_requesters  heavy_requests
+    1008261  20354110    250433           7317398              1323         3107261
+[MATCH] B1 concentration (NTILE): 1 Spark rows vs 1 PostgreSQL rows
+[MATCH] B2 channel transition matrix (LAG): 9 Spark rows vs 9 PostgreSQL rows
+channel       MOBILE  ONLINE  PHONE
+prev_channel                       
+MOBILE          64.2    22.4   13.4
+ONLINE          10.4    70.5   19.2
+PHONE            8.6    26.8   64.6
+[MATCH] B3 history segments (running AVG, 1 PRECEDING): 5 Spark rows vs 5 PostgreSQL rows
+
+=== Row-level check on the 10% ML sample (unique_key % 10 = 0) ===
+  Spark sample -> pandas: 1.8 s
+  PostgreSQL sample -> pandas: 7.9 s
+[MATCH] ML sample, every row and column: 2,036,003 Spark rows vs 2,036,003 PostgreSQL rows

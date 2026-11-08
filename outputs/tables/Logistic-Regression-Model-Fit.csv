@@ -1,0 +1,3 @@
+model,n_params,mcfadden_r2,auc,aic
+M1: segment + time,27,0.1398,0.7485,2095115
+M2: M1 + address history,31,0.191,0.7866,961116

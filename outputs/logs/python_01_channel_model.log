@@ -1,0 +1,37 @@
+Rows read: 2,036,003  (13 s)
+train=1,119,015  valid=314,052  test=602,936
+Digital rate  train=0.650  valid=0.666  test=0.734
+LightGBM (13 features) best_iter=292 (15 s)
+LightGBM (9 features) best_iter=45 (4 s)
+
+=== Test set (2025-01 to 2026-09) ===
+                           model  roc_auc  pr_auc_phone  log_loss  brier
+   Baseline: complaint type rate   0.7473        0.5358    0.5068 0.1654
+   Logistic regression (one-hot)   0.8271        0.6772    0.4315 0.1353
+         LightGBM (all features)   0.8769        0.7687    0.3655 0.1171
+LightGBM without address history   0.7632        0.5611    0.4910 0.1598
+
+=== Performance over time (drift check) ===
+ year      n  actual_digital  mean_prediction  roc_auc
+ 2025 334560          0.7160           0.7210   0.8824
+ 2026 268376          0.7566           0.7229   0.8710
+
+=== Cumulative gain: share of phone requests caught by the top-k% riskiest requests ===
+{'top 10%': 0.346, 'top 20%': 0.564, 'top 30%': 0.717} (random: 0.10 / 0.20 / 0.30; test phone rate = 0.266)
+
+=== Feature importance (share of total gain) ===
+complaint_type        0.396
+prev_channel          0.265
+days_since_prev       0.100
+prior_digital_rate    0.078
+location_type         0.068
+complaint_family      0.023
+agency                0.022
+hr                    0.016
+log_prior_n           0.015
+mon                   0.009
+borough               0.003
+dow                   0.002
+is_weekend            0.000
+
+Registered channel_lgbm_v1; active model: channel_lgbm_v1  (total 54 s)

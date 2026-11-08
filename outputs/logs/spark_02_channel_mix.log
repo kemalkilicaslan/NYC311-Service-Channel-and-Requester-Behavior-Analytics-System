@@ -1,0 +1,38 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/07 20:25:17 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Spark 4.2.0 | 10 cores | catalog: hive
+  mart_daily_channel_volume: 5.6 s
+  mart_monthly_channel: 0.6 s
+  mart_segment_channel: 2.3 s
+
+=== Parity with PostgreSQL marts ===
+[MATCH] mart_daily_channel_volume: 7,395 Spark rows vs 7,395 PostgreSQL rows
+[MATCH] mart_monthly_channel (window SUM share + ROWS 11 PRECEDING rolling mean): 243 Spark rows vs 243 PostgreSQL rows
+[MATCH] mart_segment_channel: 57,154 Spark rows vs 57,154 PostgreSQL rows
+
+=== Q1. Yearly channel share (Spark SQL) ===
+  yr phone_pct online_pct mobile_pct phone_pp_change   total
+2020      44.5       34.9       20.6            None 2592405
+2021      37.9       43.7       18.4            -6.5 2963856
+2022      27.2       49.9       22.9           -10.8 2881414
+2023      32.7       46.6       20.7             5.6 2971164
+2024      33.5       43.4       23.1             0.8 3189757
+2025      28.6       46.1       25.2            -4.9 3390832
+2026      24.8       53.7       21.5            -3.8 2719100
+[MATCH] Q1 yearly share + LAG: 7 Spark rows vs 7 PostgreSQL rows
+  Q4 on Spark (one partition read thanks to pruning): 1.0 s
+[MATCH] Q4 top 3 per channel (ROW_NUMBER): 9 Spark rows vs 9 PostgreSQL rows
+
+=== Hive tables in nyc311 ===
++---------+-------------------------+-----------+
+|namespace|tableName                |isTemporary|
++---------+-------------------------+-----------+
+|nyc311   |mart_daily_channel_volume|false      |
+|nyc311   |mart_monthly_channel     |false      |
+|nyc311   |mart_segment_channel     |false      |
+|nyc311   |service_requests         |false      |
++---------+-------------------------+-----------+
+

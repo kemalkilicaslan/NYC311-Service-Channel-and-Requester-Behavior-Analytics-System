@@ -1,0 +1,110 @@
+Timing is on.
+SET
+Time: 0.429 ms
+psql:sql/03_channel_mix.sql:18: NOTICE:  table "daily_channel_volume" does not exist, skipping
+DROP TABLE
+Time: 0.234 ms
+SELECT 7395
+Time: 3285.009 ms (00:03.285)
+psql:sql/03_channel_mix.sql:25: NOTICE:  table "monthly_channel" does not exist, skipping
+DROP TABLE
+Time: 0.330 ms
+SELECT 243
+Time: 11.328 ms
+psql:sql/03_channel_mix.sql:37: NOTICE:  table "segment_channel" does not exist, skipping
+DROP TABLE
+Time: 0.267 ms
+SELECT 57154
+Time: 17259.090 ms (00:17.259)
+ANALYZE
+Time: 4.011 ms
+ANALYZE
+Time: 1.944 ms
+ANALYZE
+Time: 40.785 ms
+=== Q1. Yearly channel share and year-over-year change in phone share (pp) ===
+  yr  | phone_pct | online_pct | mobile_pct | phone_pp_change |  total  
+------+-----------+------------+------------+-----------------+---------
+ 2020 |      44.5 |       34.9 |       20.6 |                 | 2592405
+ 2021 |      37.9 |       43.7 |       18.4 |            -6.5 | 2963856
+ 2022 |      27.2 |       49.9 |       22.9 |           -10.8 | 2881414
+ 2023 |      32.7 |       46.6 |       20.7 |             5.6 | 2971164
+ 2024 |      33.5 |       43.4 |       23.1 |             0.8 | 3189757
+ 2025 |      28.6 |       46.1 |       25.2 |            -4.9 | 3390832
+ 2026 |      24.8 |       53.7 |       21.5 |            -3.8 | 2719100
+(7 rows)
+
+Time: 3.704 ms
+=== Q2. Digital share by borough (2025) and gap to the city average ===
+    borough    |   n    | digital_pct | mobile_pct | gap_to_city_pp 
+---------------+--------+-------------+------------+----------------
+ MANHATTAN     | 676390 |        74.8 |       23.5 |            3.4
+ QUEENS        | 803776 |        72.3 |       21.9 |            0.9
+ BROOKLYN      | 994094 |        70.9 |       24.4 |           -0.5
+ BRONX         | 797465 |        68.9 |       33.2 |           -2.5
+ STATEN ISLAND | 117127 |        66.5 |       12.2 |           -4.8
+(5 rows)
+
+Time: 3.764 ms
+=== Q3. Phone dependence by complaint family: 2020 vs 2025 ===
+  complaint_family   | n_2025 | phone_pct_2020 | phone_pct_2025 | change_pp 
+---------------------+--------+----------------+----------------+-----------
+ Housing Conditions  | 458588 |           77.9 |           63.5 |     -14.5
+ Water & Environment | 141330 |           64.7 |           48.5 |     -16.2
+ Parks & Trees       |  94660 |           65.6 |           45.7 |     -19.9
+ Streets & Traffic   |  88000 |           44.9 |           41.4 |      -3.6
+ Health              |  83223 |           48.2 |           37.3 |     -10.9
+ Other               |  54535 |           43.7 |           35.3 |      -8.4
+ Heat/Hot Water      | 315945 |           58.1 |           31.4 |     -26.8
+ Sanitation          | 264648 |           87.6 |           27.6 |     -60.0
+ Parking & Vehicles  | 860688 |           32.8 |           20.9 |     -11.9
+ Homeless Services   |  51438 |           30.1 |           16.8 |     -13.3
+ Police - Other      | 142910 |           32.3 |           14.6 |     -17.7
+ Noise               | 832887 |           15.1 |           11.7 |      -3.3
+(12 rows)
+
+Time: 10.939 ms
+=== Q4. Top 3 complaint types per channel (2025, ROW_NUMBER) ===
+ channel | rn |     complaint_type      |   n    | pct_of_channel 
+---------+----+-------------------------+--------+----------------
+ MOBILE  |  1 | Illegal Parking         | 265707 |           31.0
+ MOBILE  |  2 | Noise - Residential     | 194646 |           22.7
+ MOBILE  |  3 | Noise - Street/Sidewalk |  69649 |            8.1
+ ONLINE  |  1 | Illegal Parking         | 243974 |           15.6
+ ONLINE  |  2 | Noise - Residential     | 211896 |           13.5
+ ONLINE  |  3 | HEAT/HOT WATER          | 157708 |           10.1
+ PHONE   |  1 | HEAT/HOT WATER          |  99067 |           10.2
+ PHONE   |  2 | UNSANITARY CONDITION    |  71154 |            7.3
+ PHONE   |  3 | Illegal Parking         |  67527 |            7.0
+(9 rows)
+
+Time: 322.994 ms
+=== Q5. Time-of-day profile: share of each channel at night (22-06), office hours (09-17), weekends ===
+ channel |    n    | night_pct | office_hours_pct | weekend_pct 
+---------+---------+-----------+------------------+-------------
+ MOBILE  | 4532378 |      29.5 |             32.2 |        32.7
+ ONLINE  | 9413754 |      23.6 |             40.8 |        29.9
+ PHONE   | 6726110 |      15.2 |             55.4 |        21.1
+(3 rows)
+
+Time: 9.168 ms
+=== Q6. Which families drove phone volume up between 2022 and 2023? ===
+  complaint_family  | phone_2022 | phone_2023 | phone_diff | pct_of_total_diff | phone_pct_2022 | phone_pct_2023 
+--------------------+------------+------------+------------+-------------------+----------------+----------------
+ Parking & Vehicles |     160125 |     251107 |      90982 |              48.3 |           23.8 |           33.2
+ Housing Conditions |     236113 |     302493 |      66380 |              35.2 |           59.4 |           66.1
+ Noise              |      27397 |      59174 |      31777 |              16.9 |            3.7 |            8.6
+ Heat/Hot Water     |      38920 |      57567 |      18647 |               9.9 |           14.7 |           25.1
+ Parks & Trees      |      33158 |      39301 |       6143 |               3.3 |           39.5 |           37.8
+(5 rows)
+
+Time: 9.090 ms
+=== Mart sizes ===
+         mart         | n_rows 
+----------------------+--------
+ daily_channel_volume |   7395
+ monthly_channel      |    243
+ segment_channel      |  57154
+(3 rows)
+
+Time: 1.969 ms

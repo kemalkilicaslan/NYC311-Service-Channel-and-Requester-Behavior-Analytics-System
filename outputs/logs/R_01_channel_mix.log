@@ -1,0 +1,19 @@
+Saved: NYC311-Service-Channel-and-Requester-Behavior-Analytics-Monthly-Channel-Share.png
+# A tibble: 12 × 4
+   complaint_family    phone_2020 phone_2025 change_pp
+   <fct>                    <dbl>      <dbl>     <dbl>
+ 1 Housing Conditions        77.9       63.5     -14.5
+ 2 Water & Environment       64.7       48.5     -16.2
+ 3 Parks & Trees             65.6       45.7     -19.9
+ 4 Streets & Traffic         44.9       41.4      -3.6
+ 5 Health                    48.2       37.3     -10.9
+ 6 Other                     43.7       35.3      -8.4
+ 7 Heat/Hot Water            58.1       31.4     -26.8
+ 8 Sanitation                87.6       27.6     -60  
+ 9 Parking & Vehicles        32.8       20.9     -11.9
+10 Homeless Services         30.1       16.8     -13.3
+11 Police - Other            32.3       14.6     -17.7
+12 Noise                     15.1       11.7      -3.3
+Saved: NYC311-Service-Channel-and-Requester-Behavior-Analytics-Phone-Share-by-Complaint-Family.png
+Saved: NYC311-Service-Channel-and-Requester-Behavior-Analytics-Hourly-Profile-by-Channel.png
+Saved: NYC311-Service-Channel-and-Requester-Behavior-Analytics-Borough-Channel-Mix.png

@@ -1,0 +1,26 @@
+{
+  "active": "channel_lgbm_v2",
+  "models": {
+    "channel_lgbm_v1": {
+      "trained_on": "2020-2023, early stopping on 2024",
+      "best_iteration": 292,
+      "test_2025_2026": {
+        "roc_auc": 0.8769,
+        "pr_auc_phone": 0.7687,
+        "log_loss": 0.3655,
+        "brier": 0.1171
+      }
+    },
+    "channel_lgbm_v2": {
+      "trained_on": "2020-01..2025-06, early stopping on 2025-H2",
+      "calibrated_on": "2026-06..2026-08",
+      "holdout_2026": {
+        "roc_auc": 0.8832,
+        "log_loss": 0.3439,
+        "brier": 0.1092,
+        "calib_gap_pp": -0.6498
+      },
+      "replaces": "channel_lgbm_v1"
+    }
+  }
+}

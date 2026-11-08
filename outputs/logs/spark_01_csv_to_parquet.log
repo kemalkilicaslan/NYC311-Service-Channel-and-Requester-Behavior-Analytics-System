@@ -1,0 +1,44 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/07 20:23:33 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Spark 4.2.0 | 10 cores | catalog: hive
+
+Writing nyc311.service_requests (Parquet, PARTITIONED BY yr)...
+  CSV -> Parquet: 49.2 s
+
+=== Hive table ===
++---------+
+|partition|
++---------+
+|yr=2020  |
+|yr=2021  |
+|yr=2022  |
+|yr=2023  |
+|yr=2024  |
+|yr=2025  |
+|yr=2026  |
++---------+
+
+Parquet files: 127 | size on disk: 1.31 GB (CSV: 16.13 GB)
+
+=== Parity with PostgreSQL ===
+  Spark rows per year: 0.7 s
+[MATCH] rows per year: 7 Spark rows vs 7 PostgreSQL rows
+                                 spark      postgres
+n                             22703288  2.270329e+07
+valid_duration                22218265  2.221826e+07
+total_resolution_hours  10280597867.71  1.028060e+10
+closed_null                     437861  4.378610e+05
+borough_null                     79390  7.939000e+04
+zip_null                        317201  3.172010e+05
+lat_null                        424571  4.245710e+05
+council_null                    537137  5.371370e+05
+[MATCH] cleaning rules: 1 Spark rows vs 1 PostgreSQL rows
+[MATCH] derived fields (channel x family, distinct requesters): 59 Spark rows vs 59 PostgreSQL rows
+
+=== Partition pruning: a 2025 filter reads only yr=2025 ===
++- FileScan parquet spark_catalog.nyc311.service_requests[yr#316] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/Users/kemalkilicaslan/Desktop/newrepos/NYC311-Service-Channel-an..., PartitionFilters: [isnotnull(yr#316), (yr#316 = 2025)], PushedFilters: [], ReadSchema: struct<>
+  rows: 3,655,041
+  COUNT(*) WHERE yr = 2025: 0.1 s

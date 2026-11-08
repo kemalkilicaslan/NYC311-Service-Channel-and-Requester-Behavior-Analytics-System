@@ -1,0 +1,53 @@
+Requests: 580,695 | Closed: 576,196 | Censored: 4,499
+
+=== S1. Kaplan-Meier median time to closure (days) with 95% CI ===
+               records events   median  0.95LCL  0.95UCL
+channel=PHONE   192603 190264 1.644167 1.636667 1.652083
+channel=MOBILE  108373 107850 1.436667 1.427500 1.445000
+channel=ONLINE  279719 278082 1.644167 1.637083 1.651667
+
+=== S1. Share still open after N days (%) ===
+# A tibble: 3 × 7
+  channel day_1 day_2 day_3 day_7 day_14 day_30
+  <chr>   <dbl> <dbl> <dbl> <dbl>  <dbl>  <dbl>
+1 PHONE    72.9  38.8  15.6   1.4    1.3    1.2
+2 MOBILE   65.7  31.2  11.2   0.6    0.5    0.5
+3 ONLINE   71.6  37.7  14.5   0.7    0.6    0.6
+Saved: outputs/tables/Kaplan-Meier-Share-Still-Open.csv
+
+Log-rank: chi2 = 2301, df = 2, p = 0
+Saved: NYC311-Service-Channel-and-Requester-Behavior-Analytics-Kaplan-Meier-Heat-Hot-Water.png
+
+=== S2. Cox hazard ratios (HR > 1 = closes faster; ref: PHONE, MANHATTAN) ===
+# A tibble: 9 × 5
+  term                 hazard_ratio conf.low conf.high   p.value
+  <chr>                       <dbl>    <dbl>     <dbl>     <dbl>
+1 channelMOBILE               1.19     1.18      1.20  0        
+2 channelONLINE               1.06     1.06      1.07  1.16e- 99
+3 boroughBRONX                1.52     1.51      1.53  0        
+4 boroughBROOKLYN             1.11     1.10      1.12  6.17e-163
+5 boroughQUEENS               1.15     1.14      1.16  1.61e-209
+6 boroughSTATEN ISLAND        1.19     1.16      1.22  7.91e- 38
+7 is_weekendTRUE              0.924    0.918     0.929 2.68e-151
+8 hr_bandOffice               0.938    0.933     0.943 4.62e-125
+9 yr2025                      1.03     1.03      1.04  3.16e- 33
+Concordance = 0.559
+Saved: outputs/tables/Cox-Hazard-Ratios.csv
+
+=== S3. Proportional hazards check (cox.zph, 50K subsample) ===
+              chisq df       p
+channel     51.1648  2 7.8e-12
+borough     48.5415  4 7.3e-10
+is_weekend 389.5017  1 < 2e-16
+hr_band      0.0913  1    0.76
+yr         233.2482  1 < 2e-16
+GLOBAL     758.3239  9 < 2e-16
+
+=== S4. Channel HR: main model vs stratified (weekend x year) ===
+# A tibble: 4 × 5
+  model         term          hazard_ratio conf.low conf.high
+  <chr>         <chr>                <dbl>    <dbl>     <dbl>
+1 S2 main       channelMOBILE         1.19     1.18      1.20
+2 S2 main       channelONLINE         1.06     1.06      1.07
+3 S4 stratified channelMOBILE         1.19     1.18      1.20
+4 S4 stratified channelONLINE         1.06     1.06      1.07

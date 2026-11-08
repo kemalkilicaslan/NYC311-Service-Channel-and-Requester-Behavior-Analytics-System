@@ -1,0 +1,4 @@
+complaint_type,kw_chi2,p_value,epsilon_sq,median_mobile,median_online,median_phone
+Illegal Parking,268.5,4.870000000000001e-59,0.0045,1.6,1.4,1.6
+Noise - Residential,752.9,3.2499999999999992e-164,0.0125,1.6,1,1.1
+HEAT/HOT WATER,325.8,1.8299999999999997e-71,0.0054,35.5,41.4,39

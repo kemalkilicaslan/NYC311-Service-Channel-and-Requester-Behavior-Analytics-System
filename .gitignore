@@ -1,0 +1,8 @@
+data/
+outputs/models/*.joblib
+.Rproj.user/
+.Rhistory
+__pycache__/
+derby.log
+metastore_db/
+spark-warehouse/

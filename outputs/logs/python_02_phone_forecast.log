@@ -1,0 +1,39 @@
+Series: 2020-01-01 to 2026-09-30 (2465 days)
+Mean daily phone requests by weekday, 2026:
+day
+Mon    2775.0
+Tue    2858.0
+Wed    2743.0
+Thu    2695.0
+Fri    2572.0
+Sat    1832.0
+Sun    1797.0
+
+=== Rolling-origin backtest: 6 folds x 28 days (2026-04-16 to 2026-09-30) ===
+            model    MAE  WAPE_%  bias_%
+         lightgbm 296.10   12.22    5.14
+seasonal_naive_28 319.95   13.20    2.20
+ yearly_naive_364 423.85   17.49   11.71
+
+WAPE (%) by fold:
+            lightgbm  seasonal_naive_28
+fold_start                             
+2026-04-16       6.2                6.5
+2026-05-14       8.2               15.7
+2026-06-11      18.9               19.0
+2026-07-09      22.7               15.4
+2026-08-06       5.7                7.2
+2026-09-03      12.3               14.7
+
+80% interval multipliers: [0.784, 1.115]  (backtest coverage: 79.8%)
+
+=== Next 28 days (2026-10-01 to 2026-10-28): weekly PHONE requests ===
+                       forecast  low_80  high_80
+week                                            
+2026-09-28/2026-10-04      7874    6175     8778
+2026-10-05/2026-10-11     15533   12182    17317
+2026-10-12/2026-10-18     14938   11716    16654
+2026-10-19/2026-10-25     15106   11847    16842
+2026-10-26/2026-11-01      7363    5774     8209
+
+Saved: Phone-Demand-Forecast figure, Phone-Forecast-Backtest.csv, Phone-Forecast-Next-28-Days.csv

@@ -1,0 +1,19 @@
+{
+  "channel": {
+    "ONLINE": "#2a78d6",
+    "MOBILE": "#1baf7a",
+    "PHONE": "#eb6834"
+  },
+  "model": {
+    "lightgbm": "#4a3aa7",
+    "logistic": "#e87ba4",
+    "ablation": "#eda100",
+    "baseline": "#8a8985"
+  },
+  "surface": "#fcfcfb",
+  "text_primary": "#0b0b0b",
+  "text_secondary": "#52514e",
+  "grid": "#e6e5e1",
+  "reference": "#8a8985",
+  "reference_light": "#c3c2b7"
+}

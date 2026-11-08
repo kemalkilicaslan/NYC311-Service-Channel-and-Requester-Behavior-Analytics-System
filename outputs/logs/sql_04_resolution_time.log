@@ -1,0 +1,49 @@
+Timing is on.
+SET
+Time: 0.182 ms
+=== R1. Crude comparison: resolution time by channel (2025) ===
+ channel |    n    | median_h | p90_h | within_24h_pct | within_7d_pct 
+---------+---------+----------+-------+----------------+---------------
+ MOBILE  |  850461 |      2.1 |  43.0 |           85.7 |          96.3
+ ONLINE  | 1539223 |      4.4 | 303.6 |           64.8 |          86.7
+ PHONE   |  953836 |     37.6 | 700.5 |           43.4 |          74.7
+(3 rows)
+
+Time: 1699.598 ms (00:01.700)
+=== R2. Within the 8 largest complaint types: median hours by channel ===
+     complaint_type      | n_type | mobile_med | online_med | phone_med 
+-------------------------+--------+------------+------------+-----------
+ Illegal Parking         | 577204 |        1.6 |        1.4 |       1.6
+ Noise - Residential     | 463283 |        1.6 |        1.0 |       1.1
+ HEAT/HOT WATER          | 314414 |       35.4 |       41.4 |      38.9
+ Noise - Street/Sidewalk | 173009 |        0.9 |        0.9 |       0.9
+ Blocked Driveway        | 172577 |        1.8 |        1.6 |       1.8
+ UNSANITARY CONDITION    | 117407 |            |      292.0 |     233.9
+ Water System            |  76171 |        3.0 |        3.6 |       3.7
+ PLUMBING                |  69286 |            |      172.9 |     198.5
+(8 rows)
+
+Time: 2110.529 ms (00:02.111)
+=== R3. Direct standardization: share closed within 7 days with the complaint mix held fixed ===
+ channel | n_types | crude_within_7d_pct | standardized_within_7d_pct 
+---------+---------+---------------------+----------------------------
+ MOBILE  |      27 |                96.3 |                       94.9
+ ONLINE  |      27 |                95.1 |                       95.0
+ PHONE   |      27 |                92.1 |                       94.9
+(3 rows)
+
+Time: 381.915 ms
+psql:sql/04_resolution_time.sql:68: NOTICE:  table "heat_survival" does not exist, skipping
+DROP TABLE
+Time: 0.668 ms
+SELECT 580695
+Time: 1629.559 ms (00:01.630)
+=== mart.heat_survival summary ===
+ channel |   n    | events | censored | median_time_h 
+---------+--------+--------+----------+---------------
+ MOBILE  | 108373 | 107850 |      523 |          34.5
+ ONLINE  | 279719 | 278082 |     1637 |          39.5
+ PHONE   | 192603 | 190264 |     2339 |          39.5
+(3 rows)
+
+Time: 224.968 ms

@@ -1,0 +1,76 @@
+Timing is on.
+SET
+Time: 0.179 ms
+SET
+Time: 0.120 ms
+psql:sql/05_requester_behavior.sql:22: NOTICE:  table "request_history" does not exist, skipping
+DROP TABLE
+Time: 0.347 ms
+SELECT 20354110
+Time: 55259.218 ms (00:55.259)
+ANALYZE
+Time: 3847.845 ms (00:03.848)
+=== B1. Concentration: requesters, one-time share, Pareto shares ===
+ requesters | requests | one_time_pct | top1pct_share | top10pct_share | heavy_requesters | heavy_share_pct 
+------------+----------+--------------+---------------+----------------+------------------+-----------------
+    1008261 | 20354110 |         24.8 |          36.0 |           72.6 |             1323 |            15.3
+(1 row)
+
+Time: 3931.316 ms (00:03.931)
+=== B2. Channel transition matrix: previous channel -> next channel (row %) ===
+    (heavy requesters with >1000 requests excluded, gap <= 365 days)
+ prev_channel | n_from  | to_phone | to_online | to_mobile 
+--------------+---------+----------+-----------+-----------
+ MOBILE       | 3227553 |     13.4 |      22.4 |      64.2
+ ONLINE       | 6986090 |     19.2 |      70.5 |      10.4
+ PHONE        | 5201491 |     64.6 |      26.8 |       8.6
+(3 rows)
+
+Time: 1390.633 ms (00:01.391)
+=== B3. Digital share of a request given the address history ===
+ history_segment  |    n    | digital_pct 
+------------------+---------+-------------
+ 0 first request  | 1006938 |        53.1
+ 1 always phone   | 1025788 |        31.8
+ 2 mostly phone   | 3905140 |        44.3
+ 3 mostly digital | 9844465 |        76.5
+ 4 always digital | 1464518 |        83.2
+(5 rows)
+
+Time: 4440.918 ms (00:04.441)
+=== B4. Cohort: addresses whose first request came in 2020, by first channel ===
+ first_channel |  yr  | active_requesters | requests | digital_pct 
+---------------+------+-------------------+----------+-------------
+ MOBILE        | 2020 |             65246 |   366630 |        80.9
+ MOBILE        | 2022 |             37631 |   309132 |        79.2
+ MOBILE        | 2024 |             37214 |   333969 |        72.3
+ MOBILE        | 2025 |             37266 |   343005 |        76.3
+ ONLINE        | 2020 |            132595 |   616613 |        76.7
+ ONLINE        | 2022 |             74317 |   560182 |        76.6
+ ONLINE        | 2024 |             73034 |   615948 |        71.1
+ ONLINE        | 2025 |             72496 |   625284 |        74.4
+ PHONE         | 2020 |            255448 |  1219003 |        33.8
+ PHONE         | 2022 |            144580 |  1078019 |        66.6
+ PHONE         | 2024 |            139345 |  1162562 |        58.9
+ PHONE         | 2025 |            140315 |  1206693 |        64.5
+(12 rows)
+
+Time: 17010.335 ms (00:17.010)
+psql:sql/05_requester_behavior.sql:97: NOTICE:  table "ml_requests" does not exist, skipping
+DROP TABLE
+Time: 0.950 ms
+SELECT 2036003
+Time: 11052.318 ms (00:11.052)
+=== mart.ml_requests by year ===
+  yr  |   n    | digital_pct 
+------+--------+-------------
+ 2020 | 254552 |        56.2
+ 2021 | 289984 |        62.5
+ 2022 | 282486 |        73.0
+ 2023 | 291993 |        67.4
+ 2024 | 314052 |        66.6
+ 2025 | 334560 |        71.6
+ 2026 | 268376 |        75.7
+(7 rows)
+
+Time: 1852.836 ms (00:01.853)

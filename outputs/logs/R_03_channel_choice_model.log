@@ -1,0 +1,91 @@
+Cells: 16,710 | Requests represented: 17,245,172
+
+=== Model fit ===
+# A tibble: 2 × 5
+  model                    n_params mcfadden_r2   auc     aic
+  <chr>                       <int>       <dbl> <dbl>   <dbl>
+1 M1: segment + time             27       0.140 0.748 2095115
+2 M2: M1 + address history       31       0.191 0.787  961116
+Saved: outputs/tables/Logistic-Regression-Model-Fit.csv
+
+=== Likelihood ratio test: does address history add information? ===
+Analysis of Deviance Table
+
+Model 1: cbind(digital, phone) ~ complaint_family + borough + hr_band + 
+    is_weekend + yr
+Model 2: cbind(digital, phone) ~ complaint_family + borough + hr_band + 
+    is_weekend + yr + history
+  Resid. Df Resid. Dev Df Deviance  Pr(>Chi)    
+1     16683    2010572                          
+2     16679     876564  4  1134008 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+=== M2 odds ratios (95% CI) ===
+# A tibble: 30 × 6
+   group                                      label               odds_ratio
+   <chr>                                      <chr>                    <dbl>
+ 1 Complaint family (ref: Parking & Vehicles) Buildings                0.197
+ 2 Complaint family (ref: Parking & Vehicles) Health                   0.545
+ 3 Complaint family (ref: Parking & Vehicles) Heat/Hot Water           0.932
+ 4 Complaint family (ref: Parking & Vehicles) Homeless Services        1    
+ 5 Complaint family (ref: Parking & Vehicles) Housing Conditions       0.233
+ 6 Complaint family (ref: Parking & Vehicles) Noise                    2.60 
+ 7 Complaint family (ref: Parking & Vehicles) Other                    0.609
+ 8 Complaint family (ref: Parking & Vehicles) Parks & Trees            0.482
+ 9 Complaint family (ref: Parking & Vehicles) Police - Other           1.18 
+10 Complaint family (ref: Parking & Vehicles) Sanitation               0.4  
+11 Complaint family (ref: Parking & Vehicles) Streets & Traffic        0.535
+12 Complaint family (ref: Parking & Vehicles) Water & Environment      0.406
+13 Borough (ref: Manhattan)                   BRONX                    0.728
+14 Borough (ref: Manhattan)                   BROOKLYN                 0.869
+15 Borough (ref: Manhattan)                   QUEENS                   0.776
+16 Borough (ref: Manhattan)                   STATEN ISLAND            0.847
+17 Time band (ref: Office 09-17)              Evening 17-22            1.39 
+18 Time band (ref: Office 09-17)              Morning 06-09            1.32 
+19 Time band (ref: Office 09-17)              Night 22-06              1.12 
+20 Weekend (ref: Weekday)                     Weekend                  1.23 
+21 Year (ref: 2020)                           2021                     1.48 
+22 Year (ref: 2020)                           2022                     2.23 
+23 Year (ref: 2020)                           2023                     1.59 
+24 Year (ref: 2020)                           2024                     1.50 
+25 Year (ref: 2020)                           2025                     1.91 
+26 Year (ref: 2020)                           2026                     2.73 
+27 Address history (ref: first request)       1 always phone           0.443
+28 Address history (ref: first request)       2 mostly phone           0.626
+29 Address history (ref: first request)       3 mostly digital         2.01 
+30 Address history (ref: first request)       4 always digital         3.22 
+   conf.low conf.high   p.value
+      <dbl>     <dbl>     <dbl>
+ 1    0.15      0.257 5.20e- 32
+ 2    0.542     0.549 0        
+ 3    0.928     0.937 4.20e-184
+ 4    0.989     1.01  1   e+  0
+ 5    0.233     0.234 0        
+ 6    2.59      2.61  0        
+ 7    0.605     0.614 0        
+ 8    0.479     0.485 0        
+ 9    1.18      1.19  0        
+10    0.398     0.401 0        
+11    0.532     0.538 0        
+12    0.404     0.409 0        
+13    0.725     0.731 0        
+14    0.866     0.872 0        
+15    0.773     0.779 0        
+16    0.842     0.852 0        
+17    1.38      1.39  0        
+18    1.31      1.32  0        
+19    1.12      1.12  0        
+20    1.22      1.23  0        
+21    1.48      1.49  0        
+22    2.22      2.24  0        
+23    1.58      1.60  0        
+24    1.50      1.51  0        
+25    1.90      1.92  0        
+26    2.72      2.74  0        
+27    0.44      0.445 0        
+28    0.623     0.629 0        
+29    2.00      2.02  0        
+30    3.20      3.24  0        
+Saved: outputs/tables/Logistic-Regression-Odds-Ratios.csv
+Saved: NYC311-Service-Channel-and-Requester-Behavior-Analytics-Logistic-Regression-Odds-Ratios.png

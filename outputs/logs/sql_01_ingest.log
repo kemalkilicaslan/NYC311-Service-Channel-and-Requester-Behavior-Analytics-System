@@ -1,0 +1,81 @@
+Timing is on.
+CREATE DATABASE
+Time: 216.074 ms
+Time: 33.573 ms
+You are now connected to database "nyc311" as user "postgres".
+SET
+Time: 0.167 ms
+SET
+Time: 0.094 ms
+SET
+Time: 0.084 ms
+CREATE SCHEMA
+Time: 0.451 ms
+CREATE SCHEMA
+Time: 0.207 ms
+CREATE SCHEMA
+Time: 0.192 ms
+CREATE TABLE
+Time: 2.269 ms
+Time: 1.722 ms
+raw.service_requests is empty: loading CSV...
+COPY 22703288
+Time: 112592.046 ms (01:52.592)
+ANALYZE
+Time: 2515.919 ms (00:02.516)
+CREATE TABLE
+Time: 3.656 ms
+DO
+Time: 14.063 ms
+CREATE TABLE
+Time: 0.889 ms
+Time: 0.663 ms
+core.service_requests is empty: transforming raw -> core...
+INSERT 0 22703288
+Time: 314457.646 ms (05:14.458)
+VACUUM
+Time: 30943.755 ms (00:30.944)
+SET
+Time: 0.301 ms
+ALTER TABLE
+Time: 19112.854 ms (00:19.113)
+CREATE INDEX
+Time: 22314.831 ms (00:22.315)
+CREATE INDEX
+Time: 10239.188 ms (00:10.239)
+CREATE INDEX
+Time: 24863.910 ms (00:24.864)
+=== Row counts: raw vs core (must match) ===
+ raw_rows | core_rows | raw_size 
+----------+-----------+----------
+ 22703288 |  22703288 | 15 GB
+(1 row)
+
+Time: 10656.619 ms (00:10.657)
+=== Partitions ===
+        partition         | est_rows |  size   
+--------------------------+----------+---------
+ service_requests_2020    |  2942024 | 1088 MB
+ service_requests_2021    |  3220882 | 1189 MB
+ service_requests_2022    |  3169960 | 1165 MB
+ service_requests_2023    |  3224723 | 1185 MB
+ service_requests_2024    |  3456770 | 1271 MB
+ service_requests_2025    |  3655041 | 1347 MB
+ service_requests_2026    |  3033888 | 1110 MB
+ service_requests_2027    |        0 | 40 kB
+ service_requests_default |        0 | 40 kB
+(9 rows)
+
+Time: 7.054 ms
+=== Partition pruning: a 2025 filter must touch only the 2025 partition ===
+                                                                                 QUERY PLAN                                                                                 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize Aggregate
+   ->  Gather
+         Workers Planned: 2
+         ->  Partial Aggregate
+               ->  Parallel Index Only Scan using service_requests_2025_channel_created_at_idx on service_requests_2025 service_requests
+                     Index Cond: ((created_at >= '2025-01-01 00:00:00'::timestamp without time zone) AND (created_at < '2026-01-01 00:00:00'::timestamp without time zone))
+(6 rows)
+
+Time: 0.751 ms
